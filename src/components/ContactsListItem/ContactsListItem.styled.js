@@ -9,6 +9,7 @@ export const Button = styled.button`
   border-radius:10px; 
   padding: 1em 1.5em;
   cursor: pointer;
+  text-transform: capitalize;
 `;
 
 export const ContactName = styled.p`

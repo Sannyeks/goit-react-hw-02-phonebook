@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { nanoid } from 'nanoid';
-import { Section,Title } from './App.styled';
+import { Section, Title } from './App.styled';
 
 import Form from './Form';
 import ContactsList from './ContactsList';
@@ -20,15 +20,22 @@ export class App extends Component {
 
   addNewContact = data => {
     const { contacts } = this.state;
+    const isExist = contacts.some(
+      ({ name }) => name.toLowerCase() === data.name.toLowerCase()
+    );
+
+    if (isExist) {
+      Notify.warning(`${data.name} is already in contacts`);
+      return;
+    }
     const newContact = {
       id: nanoid(),
       ...data,
     };
-    contacts.some(({ name }) => name === data.name)
-      ? Notify.warning(`${data.name} is already in contacts`)
-      : this.setState(prevState => ({
-          contacts: [...prevState.contacts, newContact],
-        }));
+
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
 
   deleteContact = id => {
