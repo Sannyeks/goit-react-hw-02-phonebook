@@ -56,7 +56,7 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     const visibleContacts = this.getVisibleContacts();
     return (
       <>
@@ -66,11 +66,17 @@ export class App extends Component {
         </Section>
         <Section>
           <Title>Contacts</Title>
-          <Filter value={filter} onChange={this.changeFilter} />
-          <ContactsList
-            contacts={visibleContacts}
-            deleteContact={this.deleteContact}
-          />
+          {contacts.length ? (
+            <>
+              <Filter value={filter} onChange={this.changeFilter} />
+              <ContactsList
+                contacts={visibleContacts}
+                deleteContact={this.deleteContact}
+              />
+            </>
+          ) : (
+            <p>Contact list is ampty</p>
+          )}
         </Section>
       </>
     );
